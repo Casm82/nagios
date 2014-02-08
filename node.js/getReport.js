@@ -34,7 +34,7 @@ for ( var i = 1; i <= 3; i++)
 	var smon = emon = i + 3*(quarter - 1);	// Месяц
 	var eday = getLastMonthDay(smon);		// Последний день месяца
 	// Адрес запроса
-	var url =	"http://nagios.kupol.ru/nagios/cgi-bin/avail.cgi?" + 
+	var url =	"http://nagios.domain.ru/nagios/cgi-bin/avail.cgi?" + 
 			"show_log_entries=&servicegroup=" + service_grp +
 			"&timeperiod=custom" + 
 			"&smon=" + smon + "&sday=" + sday + "&syear=" + syear + "&shour=" + shour + "&smin=" + smin + "&ssec=" + ssec + 
