@@ -24,7 +24,7 @@ echo "Host,%Time Up,%Time Down,Technology" > $reportfile
 # Read each service name from file
 for SERVICE_GRP in `cat $BASE_DIR/src_services`; do
   wget --user nagiosadmin --password yfubjc -O /tmp/service_report -q \
-    "http://nagios.kupol.ru/nagios/cgi-bin/avail.cgi?show_log_entries=&servicegroup=$SERVICE_GRP&timeperiod=custom&timeperiod=custom&smon=$SMON&sday=$SDAY&syear=$SYEAR&shour=$SHOUR&smin=$SMIN&ssec=$SSEC&emon=$EMON&eday=$EDAY&eyear=$EYEAR&ehour=$EHOUR&emin=$EMIN&esec=$ESEC&rpttimeperiod=$TIMEPERIOD&assumeinitialstates=yes&assumestateretention=yes&assumestatesduringnotrunning=yes&includesoftstates=no&initialassumedhoststate=3&initialassumedservicestate=6&backtrack=4"
+    "http://nagios.domain.ru/nagios/cgi-bin/avail.cgi?show_log_entries=&servicegroup=$SERVICE_GRP&timeperiod=custom&timeperiod=custom&smon=$SMON&sday=$SDAY&syear=$SYEAR&shour=$SHOUR&smin=$SMIN&ssec=$SSEC&emon=$EMON&eday=$EDAY&eyear=$EYEAR&ehour=$EHOUR&emin=$EMIN&esec=$ESEC&rpttimeperiod=$TIMEPERIOD&assumeinitialstates=yes&assumestateretention=yes&assumestatesduringnotrunning=yes&includesoftstates=no&initialassumedhoststate=3&initialassumedservicestate=6&backtrack=4"
 
   for DATA in `egrep 'serviceOK' /tmp/service_report | awk -F '>' '{ print $6","$9 }' | \
                     sed 's/<\/td//g' | sed 's/ (.*%)d,/,/g'| sed 's/ //g'`; do

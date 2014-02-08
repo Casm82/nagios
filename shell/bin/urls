@@ -1,4 +1,4 @@
-http://nagios.kupol.ru/nagios/cgi-bin/avail.cgi?show_log_entries=&
+http://nagios.domain.ru/nagios/cgi-bin/avail.cgi?show_log_entries=&
 hostgroup=Production+Servers&
 timeperiod=custom&
 smon=12&
