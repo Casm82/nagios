@@ -1,6 +1,6 @@
 function getReport(res){
 
-var getRequest = require('./getRequest'),
+var sendRequest = require('./sendRequest'),
 	getLastMonthDay = require('./getLastMonthDay'),
 	waitDocuments = require('./waitDocuments'),
 	mongoose = require('mongoose'),
@@ -48,7 +48,7 @@ for ( var i = 1; i <= 3; i++)
 			"&backtrack=4";
 
 // Выполняем запрос в Nagios для каждого месяца квартала
-getRequest(url, authparam, quarter, cyear );
+//sendRequest(url, authparam, quarter, cyear );
 
 }	// <---	for
 

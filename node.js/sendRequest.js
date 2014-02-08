@@ -4,7 +4,7 @@ var request = require('request'),
 	mongoose = require('mongoose');
 
 // Функция выполняет запрос на страницу
-function getRequest(url, authparam, quarter, cyear) {
+function sendRequest(url, authparam, quarter, cyear) {
 	request.get(url, authparam, function(err, res, nagiosOutput) {
 		if (!err && res.statusCode == 200) {
 			// Приводим HTML страницу вывода nagios к стандартам W3C
@@ -31,4 +31,4 @@ function getRequest(url, authparam, quarter, cyear) {
 return;
 }
 
-module.exports = getRequest;
+module.exports = sendRequest;
