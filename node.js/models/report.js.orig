@@ -1,6 +1,15 @@
 var mongoose = require('mongoose');
 
 var schema = mongoose.Schema({
+<<<<<<< HEAD
+				report:		[],
+				duration:	Number,
+				month:		Number,
+				quarter:	Number,
+				range:		String,
+				year: 		Number,
+				title:		String
+=======
 				_id:		String,
 				url:		String,
 				report:		[],
@@ -11,6 +20,7 @@ var schema = mongoose.Schema({
 				duration:	Number,
 				title:		String,
 				leastQuarterly: {type:	Boolean, default: false}
+>>>>>>> mapReduce
 			});
 
 module.exports = mongoose.model("Report", schema);

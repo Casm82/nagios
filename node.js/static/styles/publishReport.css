@@ -1,0 +1,32 @@
+body {
+    color: black;
+    font-family: arial,verdana,serif;
+    font-weight: normal;
+    font-size: 12pt;
+}
+
+table
+{
+    padding: 0px 0px;
+    border-collapse: separete;
+}
+
+table.inBox
+{
+    width: 100%;
+    background: #D0E0E0;
+}
+
+td, th {
+    padding: 0px 5px;
+}
+
+td.percent
+{
+    text-align: right;
+}
+
+td.hostname
+{
+    background-color: rgb(180, 218, 150);
+}

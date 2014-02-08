@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+var getRequest = require('./getRequest'),
+	getLastMonthDay = require('./getLastMonthDay'),
+	mongoose = require('mongoose'),
+	models = require('./models');
+
+var countDocuments = require('./countDocuments');
+
+=======
 function getReport(res){
 
 var getRequest = require('./getRequest'),
@@ -6,6 +15,7 @@ var getRequest = require('./getRequest'),
 	mongoose = require('mongoose'),
 	models = require('./models');
 
+>>>>>>> mapReduce
 //mongoose.set('debug', true);
 
 // Параметры запроса в Nagios
@@ -28,6 +38,14 @@ var getRequest = require('./getRequest'),
 					}
 				}
 
+<<<<<<< HEAD
+
+// Подключаемся к MongoDB
+mongoose.connect("mongodb://localhost/nagios", function (err) {
+if (err) throw err;
+
+=======
+>>>>>>> mapReduce
 // Цикл по месяцам квартала
 for ( var i = 1; i <= 3; i++)
 {
@@ -52,8 +70,15 @@ getRequest(url, authparam, quarter, cyear );
 
 }	// <---	for
 
+<<<<<<< HEAD
+countDocuments(quarter, cyear);		// <-- запуск countDocuments();
+
+
+});		// <--- mongoose.connect()
+=======
 waitDocuments(quarter, cyear, res);		// <-- запуск waitDocuments(месяц, квартал, год, express);
 
 };		// <--- getReport
 
 module.exports = getReport;
+>>>>>>> mapReduce

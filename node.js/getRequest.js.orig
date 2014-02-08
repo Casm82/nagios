@@ -11,6 +11,12 @@ function getRequest(url, authparam, quarter, cyear) {
 			// с помощью htmltidy
 			tidy(nagiosOutput.toString(), function(err, body)
 				{ 
+<<<<<<< HEAD
+					var report = htmlparse(body, quarter, cyear); 
+					var Reports = mongoose.model("Report");
+					Reports.create(report, function (err, saved) {
+						console.log("nagios>> В БД сохранён отчет за период " + saved.range);
+=======
 					var report = htmlparse(body, url, quarter, cyear); 
 					var Reports = mongoose.model("Report");
 					Reports.create(report, function (err, saved) {
@@ -24,6 +30,7 @@ function getRequest(url, authparam, quarter, cyear) {
 
 						}
 						console.log("\nnagios>> В БД сохранён отчет за период " + saved._id);
+>>>>>>> mapReduce
 						})
 				} )
 			}

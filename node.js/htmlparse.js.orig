@@ -2,7 +2,11 @@ var xpath = require('xpath'),
 	dom = require('xmldom').DOMParser;
 
 // Функция парсинга html страницы и сохранения отчёта в MongoDB
+<<<<<<< HEAD
+function htmlparse (body, quarter, cyear) {
+=======
 function htmlparse (body, url, quarter, cyear) {
+>>>>>>> mapReduce
 	var doc = new dom().parseFromString(body);
 	
 	// Отпределяем диапозон отчёта вида: "01-01-2013 00:00:00 to 01-31-2013 23:59:59"
@@ -24,6 +28,15 @@ function htmlparse (body, url, quarter, cyear) {
 	// Вычисляем продолжительность в секундах
 	var duration_sec = duration[0]*60*60*24 + duration[1]*60*60 + duration[2]*60 + duration[3];
 
+<<<<<<< HEAD
+	var htmlobj = {	report: [],
+					duration: duration_sec,
+					month: report_month,
+					quarter: quarter,
+					range: htmlRange,
+					year: cyear,
+					title: xpath.select("//title/text()", doc)[0].nodeValue };
+=======
 	var htmlobj = {	"_id"	: htmlRange,
 					"url"	: url,
 					"report": [],
@@ -33,6 +46,7 @@ function htmlparse (body, url, quarter, cyear) {
 					"title"	: xpath.select("//title/text()", doc)[0].nodeValue,
 					"duration": duration_sec };
 
+>>>>>>> mapReduce
 	var tablecontent = (xpath.select("/html/body/div/table[2]", doc)[0].childNodes);
 
 	for (tr in tablecontent) {
