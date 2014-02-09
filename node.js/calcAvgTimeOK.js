@@ -1,6 +1,7 @@
 // Определяем минимальное значение доступности служб по месяцам за квартал
 var mongoose = require('mongoose'),
-	publishMinreport = require('./publishMinreport');
+	app = require('express'),
+	publishReport = require('./publishReport');
 
 function calcAvgTimeOK (res) {
 //	console.log("\ncalcAvg>> Считаем средние значение доступности по месяцам");
@@ -44,29 +45,42 @@ function calcAvgTimeOK (res) {
 	// 	{ _id: { month: 3, quarter: 1, year: 2013 }, value: 99.99097619047619 }
 	// ]
 	//
-	// Для каждой пары вызываем функцию
 
-	function findMinReport(array){
+	function writeAvgTimeOK(array){
+		// Месяц с минимальными показателями сохраним в minTimeReport
 		var minTimeReport = { "_id": null, "value": Infinity};
+
+		// Для каждого месяца в квартале
 		for ( var i in array) 
 			{
 				// Сохраняем среднее значение в БД
 				Reports.update({date: array[i]._id}, {$set: {averageOK: array[i].value}}, 
-					function (err, numberAffected, raw) {
+					function (err, numberAffected) {
 					  if (err) return err;
-						console.log('The number of updated documents was %d', numberAffected);
-						console.log('The raw response from Mongo was ', raw);
+						console.log('The number of updated documents averageOK was %d', numberAffected);
 					});
+
+				// Ищем минимальное значение доступности служб за месяц
 				if (array[i].value < minTimeReport.value) { minTimeReport = array[i]; };
-			};
-		return minTimeReport;
-		};
+			
+			};	// <--- for ( var i in array)
 
-// TODO: 	сохранить среднее значение
+		// Для месяца с минимальными показателями сохраняем в БД метку
+		Reports.update({date: minTimeReport._id}, {$set: {leastQuarterly: true}}, 
+			function (err, numberAffected) {
+			  if (err) return err;
+				console.log('The number of updated documents minTimeReport was %d', numberAffected);
+			});
+				
+		};		// <--- writeAvgTimeOK()
 
-	//Выполняем свертку
-	//Минимальное значение публикуем
-	Reports.mapReduce(report, function (err, mapOut) { publishMinreport(findMinReport(mapOut), res); });
+	// Выполняем свертку
+	// Получаем месяц и среднее значение доступности служб в этот месяц в виде массива
+	// Для каждого элемента массива вызываем функцию writeAvgTimeOK, которая записывает в БД
+	// среднее значение доступности служб за месяц и помечает отчёт с наименьшими показателями
+	// меткой leastQuarterly = true;
+	// После вызываем publishReport, которая публикует отчёт
+	Reports.mapReduce(report, function (err, mapOut) { writeAvgTimeOK(mapOut), publishReport(res); });
 
 };		// <--- calculateMin()
 
