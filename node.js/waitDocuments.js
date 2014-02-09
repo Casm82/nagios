@@ -21,7 +21,7 @@ function waitDocuments(quarter, cyear, res) {
 		} else {
 //			console.log("Документов в БД на текущий момент: " + mongodocs);
 			console.log("\ncount>> Документов 3 или больше");
-			calcAvgTimeOK(res);
+			calcAvgTimeOK(quarter, cyear, res);
 		}
 	});		// <--- Reports.count mongoose
 };		// <--- waitDocuments()

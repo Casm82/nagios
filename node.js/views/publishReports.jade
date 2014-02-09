@@ -5,8 +5,10 @@ block content
 	table
 		- Documents.forEach(function(doc){
 			th
-				a(href =doc.url)
-					Доступность за 
+				span= doc.leastQuarterly
+				| 
+				a(href =doc.url) 
+					| Доступность за 
 					= doc.date.month
 					|  месяц 
 					= doc.date.year

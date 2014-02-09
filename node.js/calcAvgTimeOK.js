@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 	app = require('express'),
 	publishReport = require('./publishReport');
 
-function calcAvgTimeOK (res) {
+function calcAvgTimeOK (quarter, year, res) {
 //	console.log("\ncalcAvg>> Считаем средние значение доступности по месяцам");
 	var Reports = mongoose.model("Report");
 
@@ -80,7 +80,7 @@ function calcAvgTimeOK (res) {
 	// среднее значение доступности служб за месяц и помечает отчёт с наименьшими показателями
 	// меткой leastQuarterly = true;
 	// После вызываем publishReport, которая публикует отчёт
-	Reports.mapReduce(report, function (err, mapOut) { writeAvgTimeOK(mapOut), publishReport(res); });
+	Reports.mapReduce(report, function (err, mapOut) { writeAvgTimeOK(mapOut), publishReport(quarter, year, res); });
 
 };		// <--- calculateMin()
 
