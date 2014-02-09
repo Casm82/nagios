@@ -14,7 +14,7 @@ function publishReport(res) {
 		}
 	});
 */
-//	console.log(Reports);
+	console.log(Reports);
 	var JadeObject = {title: "Отчёт о доступности служб за " + Reports[0].date.quarter + " квартал " +
 			Reports[0].date.year + " года", Documents: Reports};
 	res.render('publishReports.jade', JadeObject);

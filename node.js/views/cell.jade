@@ -1,4 +1,19 @@
-table
-		th столбец1
-		th столбец2
-		th столбец3
+- if (report.length)
+	table
+		th Cервер
+		th Службы
+		tr Средняя доступность: 
+			span= doc.averageOK
+			span  %
+		- report.forEach(function(server){
+			tr
+				td.hostname= server.host
+				td 
+					table.inBox
+						- server.services.forEach(function(service){
+							tr.service
+								td.servicename= service.servicename
+								td.percent= service.timeOK
+						- })
+						
+		- })

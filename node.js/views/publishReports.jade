@@ -1,28 +1,10 @@
 extends layout
 
 block content
-
 	h2 Отчёт по месяцам
 	table
-		th столбец1
-		th столбец2
-		th столбец3
-		tr
-			td ячейка 1,1
-				include cell
-			td ячейка 2,1
-			td ячейка 3,1
-		tr
-			td ячейка 1,2
-			td ячейка 2,2
-			td ячейка 3,2
-
-	- var doc = Documents[0]
-	- var report = doc.report;
-	- if (report.length)
-		table
-			th Cервер
-			th 
+		- Documents.forEach(function(doc){
+			th
 				a(href =doc.url)
 					Доступность за 
 					= doc.date.month
@@ -30,15 +12,11 @@ block content
 					= doc.date.year
 					|  года
 					= _id
-			- report.forEach(function(server){
-				tr
-					td.hostname= server.host
-					td 
-						table.inBox
-							- server.services.forEach(function(service){
-								tr.service
-									td.servicename= service.servicename
-									td.percent= service.timeOK
-							- })
-							
+		- })
+		
+		tr
+			- Documents.forEach(function(doc){
+				- var report = doc.report;
+				td
+					include cell
 			- })
