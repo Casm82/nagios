@@ -4,6 +4,7 @@ var schema = mongoose.Schema({
 				_id:		String,
 				url:		String,
 				report:		[],
+				averageOK:	Number,
 				date:		{	month:		Number,
 							 	quarter:	Number,
 								year: 		Number

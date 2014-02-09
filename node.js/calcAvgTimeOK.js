@@ -50,6 +50,13 @@ function calcAvgTimeOK (res) {
 		var minTimeReport = { "_id": null, "value": Infinity};
 		for ( var i in array) 
 			{
+				// Сохраняем среднее значение в БД
+				Reports.update({date: array[i]._id}, {$set: {averageOK: array[i].value}}, 
+					function (err, numberAffected, raw) {
+					  if (err) return err;
+						console.log('The number of updated documents was %d', numberAffected);
+						console.log('The raw response from Mongo was ', raw);
+					});
 				if (array[i].value < minTimeReport.value) { minTimeReport = array[i]; };
 			};
 		return minTimeReport;
@@ -57,11 +64,9 @@ function calcAvgTimeOK (res) {
 
 // TODO: 	сохранить среднее значение
 
-Reports.mapReduce( report, function (err, mapOut) {
-		var minTimeOKReport = findMinReport(mapOut);
-		publishMinreport(minTimeOKReport, res);
->>>>>>> mapReduce
-	});
+	//Выполняем свертку
+	//Минимальное значение публикуем
+	Reports.mapReduce(report, function (err, mapOut) { publishMinreport(findMinReport(mapOut), res); });
 
 };		// <--- calculateMin()
 

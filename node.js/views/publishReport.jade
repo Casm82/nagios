@@ -1,0 +1,27 @@
+extends layout
+
+block content
+	h2 Отчёт с наименьшими показателями доступности (месяц/день/год):
+	h3
+		a(href =url) 
+			= _id
+	- if (report.length)
+		table
+			th Cервер
+			th Доступность за 
+				= date.month
+				|  месяц 
+				= date.year
+				|  года
+			- report.forEach(function(server){
+				tr
+					td.hostname= server.host
+					td 
+						table.inBox
+							- server.services.forEach(function(service){
+								tr.service
+									td.servicename= service.servicename
+									td.percent= service.timeOK
+							- })
+							
+			- })

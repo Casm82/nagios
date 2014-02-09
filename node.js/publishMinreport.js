@@ -14,7 +14,7 @@ function publishMinreport(report, res) {
 			if (err) throw err;
 			console.log("\npublishMinreport>> Публикуем отчёт:");
 			console.log(minReport);
-			res.render('index.jade', minReport);
+			res.render('publishReport.jade', minReport);
 		});
 	});
 	
