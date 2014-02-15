@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var Reports = mongoose.model("Report");
 function writeAvgTimeOK(array){
-console.log("\n writeAvgTimeOK #exec");
 	// Получаем массив пар {_id: дата, value: "среднее timeOK"} как mapOut
 	// 
 	// [
@@ -18,7 +17,7 @@ console.log("\n writeAvgTimeOK #exec");
 			// Сохраняем среднее значение в БД
 			var docId = array[i]._id;
 			var docValue = array[i].value;
-		console.log('\n writeAvgTimeOK >>> записываем среднее значение для %j <--- %d', docId, docValue);
+		console.log('\nwriteAvgTimeOK >>> записываем среднее значение для %j <--- %d', docId, docValue);
 			Reports.findOneAndUpdate( 
 				{'date': docId}, 
 				{$set: {avgTime: docValue}},

@@ -53,25 +53,18 @@ for ( var i = 1; i <= 3; i++)
 	// forceReq - если выполняется запрос для текущего месяца, то принудительно 
 	// отправить запрос в Nagios и обновить существующий документ в БД
 	var reqId = { month: smon, quarter: quarterReq, year: yearReq };
-	forceReq = ((smon == monthNow) && (syear == yearNow));
+	if ((smon == monthNow) && (syear == yearNow)) { forceReq = true };
 
 	// Ищем существующие отчёты в БД
 	// Выполняем запрос в Nagios для каждого месяца квартала
 	// если запращиваемый момент времени не больше текущего 
 	// и увеличиваем счётчик ожидаемых в БД документов
-	if ( (yearReq < yearNow) || (smon <= monthNow) ) {
-		
-		console.log("\n checkExistingReports #exec month: %d, year: %d", smon, yearReq);
-		console.log("\n forceCheck %s", forceReq);
-		
+	if ((yearReq < yearNow) || (smon <= monthNow)) {
 		checkExistingReports(url, authparam, reqId, forceReq);
-
 		expectedDocs++;
-	};
-
+	}; // <--- if
 }  // <---	for
 
-console.log("\nwaitDocuments #exec, force %d", forceReq);
 waitDocuments(res, reqId, expectedDocs, forceReq); // <-- запуск waitDocuments(express, {квартал, год}, кол-во док);
 
 };		// <--- getReport

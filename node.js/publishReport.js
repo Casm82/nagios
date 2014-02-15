@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var app = require('express');
 
 function publishReport(res, reqId) {
-	console.log("\npublishReport>> Публикуем отчёты по месяцам");
 	var Reports = mongoose.model("Report");
 	Reports.find(
 		{'date.quarter': reqId.quarter,

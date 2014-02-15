@@ -47,7 +47,6 @@ function calcAvgTimeOK (res, reqId) {
 	// После вызываем publishReport, которая публикует отчёт
 	Reports.mapReduce(report, function (err, mapOut) {
 		console.log("\nmapOut>> %j", mapOut);
-		console.log("\n writeAvgTimeOK #exec квартал %d, год %d", reqId.quarter, reqId.year);
 		writeAvgTimeOK((mapOut), publishReport(res, reqId)); 
 	});
 
