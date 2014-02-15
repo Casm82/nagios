@@ -1,24 +1,24 @@
 extends layout
+block css
+  link(rel='stylesheet', href='/styles/publishReport.css')
 
 block content
-	h2 Отчёт по месяцам
-	table
-		- Documents.forEach(function(doc){
-			th
-				span= doc.leastQuarterly
-				| 
-				a(href =doc.url) 
-					| Доступность за 
-					= doc.date.month
-					|  месяц 
-					= doc.date.year
-					|  года
-					= _id
-		- })
-		
-		tr
-			- Documents.forEach(function(doc){
-				- var report = doc.report;
-				td
-					include cell
-			- })
+  h2= title
+  table
+    - Documents.forEach(function(doc){
+      th
+        a(href =doc.url) 
+          | Доступность за 
+          = doc.date.month
+          |  месяц 
+          = doc.date.year
+          |  года
+          = _id
+    - })
+    
+    tr
+      - Documents.forEach(function(doc){
+        - var report = doc.report;
+        td
+          include cell
+      - })

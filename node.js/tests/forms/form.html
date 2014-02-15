@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title> Form action</title>
+  </head>
+<body>
+
+  <form action="http://localhost:3000/getReport" method="POST">
+    <p><input type="text" name="user" autofocus placeholder="тут нужен текст"></p>
+    <p><input type="password" name="passwd" required></p>
+    <p><input type="radio" name="radiostation" value="mayak"> Маяк</p>
+    <p><input type="radio" name="radiostation" value="echo"> Эхо </p>
+    <p><input type="checkbox" name="browser" value="firefox">firefox</p>
+    <p><input type="hidden" name="blablabla" value="tututu"></p>
+    <p><input type="button" name="buttonPressed">button</p>
+    <p><input type="month" name="month">month</p>
+    <p><input type="date" name="date">date</p>
+    <p><input type="color" name="color">color</p>
+	<p><select name="select">
+		<option>Чебурашка</option>
+		<option>Гена</option>
+		<option>Полосатый шмель</option>
+	</select></p>
+	<p><input type="number" min="0" max="10" step="2" value="6" name="number"></p>
+	<p><input type="range" min="0" max="10" step="1" value="5" name="range"></p>
+    <p><input type="reset"></p>
+    <p><input type="submit"></p>
+ </form> 
+  <p> -------------------------------------------------------------</p>
+  <p>Дополнительное поле ввода</p>
+  <input form="form1" type="text"> Поле ввода
+  <p>Текст 1</p>
+  <input form="form1" type="submit">
+  <p>Текст 2</p>
+  <form id="form1" action="http://localhost:3000/getReport" method="POST"></form>
+  
+</body>
+</html>

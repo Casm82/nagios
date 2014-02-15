@@ -1,26 +1,26 @@
 - if (report.length)
-	table
-		- if (doc.leastQuarterly) {
-			th Cервер
-		- } else {
-			th
-		- }
-		th Службы
-		tr Средняя доступность: 
-			span= doc.averageOK
-			span  %
-		- report.forEach(function(server){
-			tr
-				- if (doc.leastQuarterly) {
-					td.hostname= server.host
-				- } else {
-					td
-				- }
-				td 
-					table.inBox
-						- server.services.forEach(function(service){
-							tr.service
-								td.servicename= service.servicename
-								td.percent= service.timeOK
-						- })
-		- })
+  table
+    - if (doc.leastQuarterly) {
+      th Cервер
+    - } else {
+      th
+    - }
+    th Службы
+    tr Средняя доступность: 
+      span= doc.avgTime
+      span  %
+    - report.forEach(function(server){
+      tr
+        - if (doc.leastQuarterly) {
+          td.hostname= server.host
+        - } else {
+          td
+        - }
+        td 
+          table.inBox
+            - server.services.forEach(function(service){
+              tr.service
+                td.servicename= service.servicename
+                td.percent= service.timeOK
+            - })
+    - })

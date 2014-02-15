@@ -1,5 +1,6 @@
 var express = require('express'),
 	mongoose = require('mongoose'),
+	models = require('./models'),
 	http = require('http'),
 	path = require('path'),
 	routes = require('./routes'),
@@ -12,6 +13,7 @@ app.set('view engine', 'jade');
 app.set('x-powered-by', false);
 app.use(express.favicon());
 app.use(express.logger('dev'));
+app.use(express.bodyParser());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());

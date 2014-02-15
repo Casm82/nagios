@@ -2,12 +2,12 @@ body {
     color: black;
     font-family: arial,verdana,serif;
     font-weight: normal;
-    font-size: 12pt;
+    font-size: 1em;
 }
 
 table
 {
-    padding: 0px 0px;
+    padding: 0 0;
     border-collapse: separete;
 }
 
@@ -18,7 +18,7 @@ table.inBox
 }
 
 td, th {
-    padding: 0px 5px;
+    padding: 0 0.5em;
 }
 
 td.percent

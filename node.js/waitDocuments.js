@@ -1,28 +1,50 @@
 var mongoose = require('mongoose'),
-	app = require('express'),
 	calcAvgTimeOK = require('./calcAvgTimeOK');
 
 var docs = 0;
-// Ожидаем когда в базу данных будут записаны все три отчёта за квартал
+// Ожидаем когда в базу данных будут записаны все отчёты за квартал
 
-function waitDocuments(quarter, cyear, res) {
-	console.log("\ncount>> Считаем документы в БД за " + quarter + " квартал " + cyear + " года");
+function waitDocuments(res, reqId, expectedDocs, forceReq) {
+
+	console.log("\nwaitDocuments>> Считаем документы в БД за " + reqId.quarter + " квартал " + reqId.year + " года");
+
 	var Reports = mongoose.model("Report");
-	Reports.count({'date.quarter': quarter, 'date.year': cyear }, function (err, mongodocs) {
-		docs = mongodocs;
-		console.log("\ncount>> Документов в БД на текущий момент: " + mongodocs);
+	
+	Reports.count({
+		'date.quarter': reqId.quarter, 
+		'date.year':	reqId.year},
+	  function (err, mongodocs) {
 		if (err) throw err ;
-		if ( mongodocs < 3) {
-			console.log("\ncount>> Документов меньше 3");
+		docs = mongodocs;
+
+		console.log("\nwaitDocuments>> Документов в БД на текущий момент: " + mongodocs);
+		console.log("\nwaitDocuments>>Ожидали документов: %d , запрос %d, %d", expectedDocs, reqId.quarter, reqId.year);
+
+		if (mongodocs < expectedDocs) {
 			setTimeout( function () {
-					console.log("\ncount>> Ждём выполнения запросов в Nagios и записи отчёта в БД");
-					waitDocuments(quarter, cyear, res);
-				}, 1500)
-		} else {
-//			console.log("Документов в БД на текущий момент: " + mongodocs);
-			console.log("\ncount>> Документов 3 или больше");
-			calcAvgTimeOK(quarter, cyear, res);
-		}
+				waitDocuments(res, reqId, expectedDocs, forceReq);
+			}, 1500);
+		} else { // <--- документов ожидаемое кол-во
+		console.log('\n waitDocuments>> проверяем на forceReq %d', forceReq);
+			// Если был отправлен повторной запрос, то ждём появления отчёта по нему
+			if (forceReq) {
+				Reports.count({
+					'date.quarter': reqId.quarter,
+					'date.year': 	reqId.year,
+					forceReq:		forceReq},
+				  function(err, forceCount){
+						if (forceCount) {calcAvgTimeOK(res, reqId)
+						} else {
+							setTimeout( function () {
+								waitDocuments(res, reqId, expectedDocs, forceReq);
+							}, 1500);
+						}; // <--- forceCount = 0
+				  }
+				);
+				
+			} else { calcAvgTimeOK(res, reqId) };
+
+		}	// <--- (mongodocs < expectedDocs)
 	});		// <--- Reports.count mongoose
 };		// <--- waitDocuments()
 
