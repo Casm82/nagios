@@ -61,6 +61,14 @@ function htmlparse (body, url, quarter, year) {
 				timeUndetermined: 
 					Number(tablecontent[tr].childNodes[13].firstChild.nodeValue.replace(/%(.*)/, ""))
 				};
+			
+			// Расчитываем время простоя в минутах
+			var timeIdleSec = (duration_sec*(1-service.timeOK/100));
+			var timeIdleHrs = Math.floor(timeIdleSec/3600);
+			var timeIdleMin = Math.round(timeIdleSec/60 - timeIdleHrs*60);
+			service.timeIdle = timeIdleHrs + "ч" + timeIdleMin + "м";
+
+//console.log("\nhtmlparse>>> duration: %d, timeOK: %d, timeIdleSec: %d, timeIdleMin: %d, timeIdleHrs: %d, timeIdle: %s", duration_sec, service.timeOK, timeIdleSec, timeIdleMin, timeIdleHrs, service.timeIdle);
 
 			if ( 
 				// Если есть ячейка с именем хоста, то вычисляем имя	

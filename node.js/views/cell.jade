@@ -5,10 +5,13 @@
     - } else {
       th
     - }
-    th Службы
-    tr Средняя доступность: 
-      span= doc.avgTime
-      span  %
+    th Службы / время простоя
+    tr 
+      div.avgTimeIdle Средняя доступность: 
+        = doc.avgTime
+        | %
+      div.avgTimeIdle Среднее время простоя: 
+        = doc.avgTimeIdle
     - report.forEach(function(server){
       tr
         - if (doc.leastQuarterly) {
@@ -21,6 +24,6 @@
             - server.services.forEach(function(service){
               tr.service
                 td.servicename= service.servicename
-                td.percent= service.timeOK
+                td.timeIdle= service.timeIdle
             - })
     - })

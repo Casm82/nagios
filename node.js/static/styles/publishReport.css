@@ -21,12 +21,24 @@ td, th {
     padding: 0 0.5em;
 }
 
-td.percent
-{
-    text-align: right;
-}
 
+div.avgTimeIdle
+{
+    text-align: left;
+    margin: 0 0 0 2em;
+}
 td.hostname
 {
     background-color: rgb(180, 218, 150);
+    text-align: left;
+}
+
+td.servicename
+{
+    text-align: left;
+}
+
+td.timeIdle
+{
+    text-align: right;
 }

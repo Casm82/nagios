@@ -5,13 +5,14 @@ var schema = mongoose.Schema({
 						quarter:	Number,
 						year: 		Number
 					  },
-				forceReq:	{type:	Boolean, default: false},
-				url:		String,
-				report:		[],
-				avgTime:	Number,
-				duration:	Number,
-				title:		String,
-				leastQuarterly: {type:	Boolean, default: false}
+				forceReq:		{type:	Boolean, default: false},
+				url:			String,
+				report	:		[],
+				avgTime:		Number,
+				avgTimeIdle:	String,
+				duration:		Number,
+				title:			String,
+				leastQuarterly:	{type:	Boolean, default: false}
 			});
 
 module.exports = mongoose.model("Report", schema);
