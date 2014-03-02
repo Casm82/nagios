@@ -29,7 +29,6 @@ function htmlparse (body, url, quarter, year) {
 							  year: year },
 					"url"	: url,
 					"report": [],
-					"title"	: xpath.select("//title/text()", doc)[0].nodeValue,
 					"duration": duration_sec };
 
 	var tablecontent = (xpath.select("/html/body/div/table[2]", doc)[0].childNodes);
@@ -50,9 +49,9 @@ function htmlparse (body, url, quarter, year) {
 			var service = { 
 				servicename:
 					tablecontent[tr].childNodes[3].firstChild.firstChild.nodeValue.replace(/\n/, ""),
-				timeOK: 
-					Number(tablecontent[tr].childNodes[5].firstChild.nodeValue.replace(/%(.*)/, "")),
-				timeWarning: 
+				percentOK: 
+					Number(tablecontent[tr].childNodes[5].firstChild.nodeValue.replace(/%(.*)/, ""))
+/*			,	timeWarning: 
 					Number(tablecontent[tr].childNodes[7].firstChild.nodeValue.replace(/%(.*)/, "")),
 				timeUnknown: 
 					Number(tablecontent[tr].childNodes[9].firstChild.nodeValue.replace(/%(.*)/, "")),
@@ -60,19 +59,18 @@ function htmlparse (body, url, quarter, year) {
 					Number(tablecontent[tr].childNodes[11].firstChild.nodeValue.replace(/%(.*)/, "")),
 				timeUndetermined: 
 					Number(tablecontent[tr].childNodes[13].firstChild.nodeValue.replace(/%(.*)/, ""))
+*/
 				};
 			
 			// Расчитываем время простоя в минутах
-			var timeIdleSec = (duration_sec*(1-service.timeOK/100));
+			var timeIdleSec = (duration_sec*(1-service.percentOK/100));
 			var timeIdleHrs = Math.floor(timeIdleSec/3600);
 			var timeIdleMin = Math.round(timeIdleSec/60 - timeIdleHrs*60);
-			service.timeIdle = timeIdleHrs + "ч" + timeIdleMin + "м";
-
-//console.log("\nhtmlparse>>> duration: %d, timeOK: %d, timeIdleSec: %d, timeIdleMin: %d, timeIdleHrs: %d, timeIdle: %s", duration_sec, service.timeOK, timeIdleSec, timeIdleMin, timeIdleHrs, service.timeIdle);
+			service.timeIdle = [timeIdleHrs, timeIdleMin, timeIdleSec];
 
 			if ( 
-				// Если есть ячейка с именем хоста, то вычисляем имя	
-				(tablecontent[tr].childNodes[1].firstChild) && 
+				// Если есть ячейка с именем хоста, то вычисляем имя
+				(tablecontent[tr].childNodes[1].firstChild) &&
 				(tablecontent[tr].childNodes[1].firstChild.nodeValue != 'Average') &&
 				(tablecontent[tr].childNodes[1].firstChild.firstChild)
 			  ) 

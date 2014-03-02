@@ -9,9 +9,8 @@ var schema = mongoose.Schema({
 				url:			String,
 				report	:		[],
 				avgTime:		Number,
-				avgTimeIdle:	String,
+				avgTimeIdle:	[],
 				duration:		Number,
-				title:			String,
 				leastQuarterly:	{type:	Boolean, default: false}
 			});
 

@@ -9,7 +9,6 @@ function clearForceLabel(reqId)
 	{$set: {"forceReq": false}},
 		function(err, cleared) {
 			if (err) return err;
-			console.log("\nclearForceLabel>>> Очищено меток %d", cleared);
 		}
 	);
 };

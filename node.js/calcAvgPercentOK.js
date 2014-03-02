@@ -1,9 +1,8 @@
 // Определяем минимальное значение доступности служб по месяцам за квартал
 var mongoose = require('mongoose'),
-	writeAvgTimeOK = require('./writeAvgTimeOK.js');
+	writeAvgPercentOK = require('./writeAvgPercentOK.js');
 
-function calcAvgTimeOK (res, reqId) {
-//	console.log("\ncalcAvg>> Считаем средние значение доступности по месяцам");
+function calcAvgPercentOK (res, reqId) {
 	var Reports = mongoose.model("Report");
 
 	var report = {};
@@ -17,7 +16,8 @@ function calcAvgTimeOK (res, reqId) {
 			var unwindservice = {
 				host: hostservices.host,
 				servicename: hostservices.services[oneservice].servicename,
-				timeOK: hostservices.services[oneservice].timeOK,
+				percentOK: hostservices.services[oneservice].percentOK,
+				timeIdle: hostservices.services[oneservice].timeIdle,
 				duration: duration
 				};
 			emit ( this.date, unwindservice) 
@@ -28,21 +28,22 @@ function calcAvgTimeOK (res, reqId) {
 	// Функция для каждого значения {дата, [{отчёт},{отчёт},{отчёт}...] }
 	// считает среднее значение {отчёт}
 	report.reduce = function(date, reports) { 
-		var timeOK = 0;
+		var percentOK = 0;
+		var timeIdleSec = 0;
 		for (var report in reports)
 		{
-			timeOK += reports[report].timeOK;	// Сумма timeOK сервисов из месяц
+			percentOK += reports[report].percentOK;				// Сумма percentOK сервисов за месяц
+			timeIdleSec += reports[report].timeIdle[2];
 		};
 	
-		var avgTimeOK = timeOK/reports.length;		// Среднее значение timeOK сервисов за месяц
+		var avgPercentOK = percentOK/reports.length;			// Среднее значение percentOK сервисов за месяц
+		var avgTimeIdleSec = timeIdleSec/reports.length;
 
-		var avgTimeIdleSec = (1 - avgTimeOK/100)*reports[0].duration;	// Простой в секундах
-		var avgTimeIdleHrs = Math.floor(avgTimeIdleSec/3600);			// Часы простоя
-		var avgTimeIdleMin = Math.round(avgTimeIdleSec/60 - avgTimeIdleHrs*60); // Минуты простоя
-		var avgTimeIdle = avgTimeIdleHrs + "ч" + avgTimeIdleMin + "м";
+		var avgTimeIdleHrs = Math.floor(avgTimeIdleSec/3600);
+		var avgTimeIdleMin = Math.round(avgTimeIdleSec/60 - avgTimeIdleHrs*60);
+		var avgTimeIdle = [avgTimeIdleHrs, avgTimeIdleMin];		// Время простоя [часы, минуты]
 
-	return {avgTimeOK: avgTimeOK, avgTimeIdle: avgTimeIdle};
-//	return avgTimeOK;
+	return {avgPercentOK: avgPercentOK, avgTimeIdle: avgTimeIdle};
 	};
 
 	report.verbose = false;
@@ -51,15 +52,14 @@ function calcAvgTimeOK (res, reqId) {
 
 	// Выполняем свертку
 	// Получаем месяц и среднее значение доступности служб в этот месяц в виде массива
-	// Для каждого элемента массива вызываем функцию writeAvgTimeOK, которая записывает в БД
+	// Для каждого элемента массива вызываем функцию writeAvgPercentOK, которая записывает в БД
 	// среднее значение доступности служб за месяц и помечает отчёт с наименьшими показателями
 	// меткой leastQuarterly = true;
 	// После вызываем publishReport, которая публикует отчёт
 	Reports.mapReduce(report, function (err, mapOut) {
-		console.log("\nmapOut>> %j", mapOut);
-		writeAvgTimeOK(mapOut, res, reqId); 
+		writeAvgPercentOK(mapOut, res, reqId); 
 	});
 
 };		// <--- calculateMin()
 
-module.exports = calcAvgTimeOK;
+module.exports = calcAvgPercentOK;

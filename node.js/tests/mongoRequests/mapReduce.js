@@ -7,18 +7,22 @@ var map = function () {
 			var unwindservice = {
 				host: hostservices.host,
 				servicename: hostservices.services[oneservice].servicename,
-				timeOK: hostservices.services[oneservice].timeOK
+				timeOK: hostservices.services[oneservice].timeOK,
+				timeIdle: hostservices.services[oneservice].timeIdle
 				};
 			emit ( this.date, unwindservice) 
 		}
 	}
 };
 
-var reduce = function(date, reports) { 
+var reduce = function(date, reports) {
 	var timeOK = 0;
+	var timeIdleHrs = 0;
 	for (var report in reports)
 	{
-		timeOK += reports[report].timeOK;	// Сумма timeOK сервисов из месяц
+		var a=reports[report];
+		timeOK += a.timeOK;
+		timeIdleHrs += a.timeIdle[0];
 	};
 	return timeOK/reports.length; 			// Среднее значение timeOK сервисов за месяц
 };

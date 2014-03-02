@@ -33,20 +33,20 @@ var getLastMonthDay = require('./getLastMonthDay'),
 // Цикл по месяцам квартала
 for ( var i = 1; i <= 3; i++)
 {
-	var smon = emon = i + 3*(quarterReq - 1);	// Месяц расчёта
-	var eday = getLastMonthDay(smon);		// Последний день месяца
+	var smon = emon = i + 3*(quarterReq - 1);		// Месяц расчёта
+	var eday = getLastMonthDay(smon, yearReq);		// Последний день месяца
 	// Адрес запроса
 	var url =	"http://nagios.domain.ru/nagios/cgi-bin/avail.cgi?" + 
 		"show_log_entries=&servicegroup=" + service_grp +
 		"&timeperiod=custom" + 
 		"&smon=" + smon + "&sday=" + sday + "&syear=" + syear + "&shour=" + shour + "&smin=" + smin + "&ssec=" + ssec + 
 		"&emon=" + emon + "&eday=" + eday + "&eyear=" + eyear + "&ehour=" + ehour + "&emin=" + emin + "&esec=" + esec + 
-		"&rpttimeperiod=" + rpttimeperiod + 
+		"&rpttimeperiod=" + rpttimeperiod +
 		"&assumeinitialstates=yes&assumestateretention=yes" +
-		"&assumestatesduringnotrunning=yes" + 
+		"&assumestatesduringnotrunning=yes" +
 		"&includesoftstates=no" +
-		"&initialassumedhoststate=3" + 
-		"&initialassumedservicestate=6" + 
+		"&initialassumedhoststate=3" +
+		"&initialassumedservicestate=6" +
 		"&backtrack=4";
 
 	// Создаём идентификатор документа по введённым данным квартала и года

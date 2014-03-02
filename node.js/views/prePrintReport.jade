@@ -1,0 +1,66 @@
+extends layout
+
+block css
+  link(rel='stylesheet', href='/styles/publishReport.css')
+
+block scripts
+  script.
+    "use strict";
+    function calcAvg()
+    {
+      var hrsArray = document.getElementsByClassName("timeHrs");
+      var minArray = document.getElementsByClassName("timeMin");
+
+      function sumArray(data)
+      {
+        var sum=0;
+        for (var i=0; i < data.length; i++)
+          {
+            sum += Number(data[i].value)
+          }
+        return sum;
+      };
+
+      var avgIdleMinCalc = (60*sumArray(hrsArray) + sumArray(minArray))/minArray.length;
+      var avgTimeIdleHrs = Math.floor(avgIdleMinCalc/60);
+      var avgTimeIdleMin = Math.round(avgIdleMinCalc - avgTimeIdleHrs*60);
+
+      var avgTimeIdleStr = document.getElementById("avgTimeIdleStr");
+      avgTimeIdleStr.innerHTML = avgTimeIdleHrs + "ч " + avgTimeIdleMin + "м";
+
+      var avgTimeIdleDiv = document.getElementById("avgTimeIdleDiv");
+      if (avgTimeIdleHrs < 4) {avgTimeIdleDiv.style.background = "lime"};
+      if ((avgTimeIdleHrs >= 4) && (avgTimeIdleHrs < 8)) {avgTimeIdleDiv.style.background = "yellow"};
+      if (avgTimeIdleHrs >= 8) {avgTimeIdleDiv.style.background = "red"};
+
+    };
+
+block content
+ div.table
+  h2 Отчёт о доступности служб за 
+      = document.date.month
+      |  месяц 
+      = document.date.year
+      |  года
+  - if (document.report.length)
+    table.report
+      th Cервер
+      th Время простоя службы
+      - document.report.forEach(function(server){
+        tr
+          td.hostname= server.host
+          td 
+            table.inBox
+              - server.services.forEach(function(service){
+                tr.service
+                  td.servicename= service.servicename
+                  td.timeIdle
+                     -var servicename = "service;" + server.host + ";" + service.servicename
+                     -var timeHrs = service.timeIdle[0]
+                     -var timeMin = service.timeIdle[1]
+                     input.timeHrs(form="action" type="number" name=servicename value=timeHrs onchange="calcAvg()")
+                     span ч 
+                     input.timeMin(form="action" type="number" name=servicename value=timeMin onchange="calcAvg()")
+                     span м
+              - })
+      - })

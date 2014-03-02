@@ -1,1 +1,21 @@
-a(href='/') Отчёт о работе серверного комплекса
+link(rel='stylesheet', href='/styles/header.css')
+
+div.main
+  a(href='/') Отчёт о работе серверного комплекса
+  - if (state == "publishedQuarter") {
+      form#action.actions(method="POST", action="/prePrintReport")
+      input(form="action" type="hidden" name="quarter" value=date.quarter)
+      input(form="action" type="hidden" name="year" value=date.year)
+      input(form="action" type="submit" value="Скорректировать и распечатать отчёт")
+  - } 
+  - if (state == "prePrinted") {
+      form#action.actions(method="POST", action="/printReport")
+      input(form="action" type="hidden" name="quarter" value=document.date.quarter)
+      input(form="action" type="hidden" name="year" value=document.date.year)
+      input(form="action" type="submit" value="Распечатать отчёт")
+      - var avgTimeIdleStr = document.avgTimeIdle[0] + "ч " + document.avgTimeIdle[1] + "м"
+      divr#avgTimeIdleDiv
+        span Среднее время простоя за месяц: 
+        span#avgTimeIdleStr
+          = avgTimeIdleStr
+  -}

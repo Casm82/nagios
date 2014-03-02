@@ -1,8 +1,10 @@
 // Функция возвращает последний день месяца
-function getLastMonthDay(month) {
+function getLastMonthDay(month, year) {
 	switch (month) {
 		case  1: return 31; break;
-		case  2: return 28; break; // TODO: високосный год !
+		case  2: if (year%4) {var day=29} else {var day = 28};
+				 return day;
+				 break;				 // TODO: високосный год !
 		case  3: return 31; break;
 		case  4: return 30; break;
 		case  5: return 31; break;

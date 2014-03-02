@@ -5,6 +5,11 @@ body {
     font-size: 1em;
 }
 
+h2
+{
+	padding: 2em 0 0 0;
+}
+
 #year {
     font-size: 1em;
     margin: 0 0 0 3em;

@@ -9,14 +9,16 @@ function publishReport(res, reqId) {
 		 'date.year': reqId.year},
 		null, 
 		{sort: {'date.month': 1}},
-		function (err, Reports) {
-			console.log("publishReport.js>>> Отчёты");
-			//console.log(Reports); 
-			var JadeObject = {title: "Отчёт о доступности служб за " + 
-				Reports[0].date.quarter + " квартал " +	Reports[0].date.year + " года", 
-				Documents: Reports};
+		function (err, reports) {
+			var JadeObject = {
+				title: "Отчёт о доступности служб за " + reports[0].date.quarter + 
+				" квартал " +	reports[0].date.year + " года", 
+				documents: reports,
+				state: "publishedQuarter",
+				date: {quarter: reqId.quarter, year: reqId.year}
+			};
 
-			res.render('publishReports.jade', JadeObject);
+			res.render('publishReports', JadeObject);
 		});
 };
 

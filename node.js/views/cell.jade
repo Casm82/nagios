@@ -11,7 +11,8 @@
         = doc.avgTime
         | %
       div.avgTimeIdle Среднее время простоя: 
-        = doc.avgTimeIdle
+       - var avgTimeIdleStr = doc.avgTimeIdle[0] + "ч " + doc.avgTimeIdle[1] + "м"
+       = avgTimeIdleStr
     - report.forEach(function(server){
       tr
         - if (doc.leastQuarterly) {
@@ -24,6 +25,7 @@
             - server.services.forEach(function(service){
               tr.service
                 td.servicename= service.servicename
-                td.timeIdle= service.timeIdle
+                - var timeIdleStr = service.timeIdle[0] + "ч " + service.timeIdle[1] + "м"
+                td.timeIdle= timeIdleStr
             - })
     - })

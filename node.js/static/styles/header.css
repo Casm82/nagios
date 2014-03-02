@@ -1,0 +1,42 @@
+a { font-weight: bolder; }
+
+a:hover
+{
+	font-family: arial;
+	color: #1fae02;
+}
+
+div.main
+{
+	padding: 1em 0 1em 2em;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	background: white;
+	border-bottom: 2px solid silver;
+	opacity: 0.85;
+}
+
+form.actions
+{
+	margin: 0 0 0 4em;
+	display: inline;
+}
+
+p.footer
+{
+	position: absolute;
+	right: 1em;
+}
+
+#avgTimeIdleDiv
+{
+	font-weight: bold;
+	font-size: 1.2em;
+	display: inline;
+	position: absolute;
+	padding: 0.25em;
+	margin: 0 1em 0 0;
+	right: 2em;
+}

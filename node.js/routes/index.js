@@ -1,4 +1,6 @@
-var getReport = require('../getReport');
+var getReport = require('../getReport'),
+	prePrintReport = require('../prePrintReport'),
+	printReport = require('../printReport');
 var dateNow = new Date();
 var yearNow = dateNow.getFullYear();
 var monthNow = dateNow.getMonth() + 1;	// Текущий месяц, начало отсчёта с нуля
@@ -16,9 +18,7 @@ module.exports = function(app) {
 		  });
 	});
 	
-	app.post('/getReport', function(req, res, next) {
-		console.log('\nindex>>> get user request');
-		console.log(req.body);
+	app.post('/getReport', function(req, res) {
 		if (( req.body.year < yearNow ) || ( req.body.quarter <= quarterNow ))
 		{
 			getReport(res, monthNow, yearNow, Number(req.body.quarter), Number(req.body.year)); 
@@ -26,4 +26,12 @@ module.exports = function(app) {
 			res.render('msg', {msg: "Статистика по будущему отсутствует"});
 		}
 	});
-};
+
+	app.post('/prePrintReport', function(req, res) {
+		prePrintReport(res, req.body);
+	});
+
+	app.post('/printReport', function(req, res) {
+		printReport(res, req.body);
+	});
+};		// <--- app()

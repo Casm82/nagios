@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-	calcAvgTimeOK = require('./calcAvgTimeOK');
+	calcAvgPercentOK = require('./calcAvgPercentOK');
 
 var docs = 0;
 // Ожидаем когда в базу данных будут записаны все три отчёта за квартал
@@ -15,11 +15,11 @@ function countDocuments(quarter, cyear) {
 			console.log("count>> Документов меньше 3");
 			setTimeout( function () {
 					console.log("count>> Ждём выполнения запросов в Nagios и записи отчёта в БД");
-					calcAvgTimeOK(quarter, cyear);
+					calcAvgPercentOK(quarter, cyear);
 				}, 1500)
 		} else {
 //			console.log("Документов в БД на текущий момент: " + mongodocs);
-			calcAvgTimeOK();
+			calcAvgPercentOK();
 		}
 	});		// <--- Reports.count mongoose
 };		// <--- countDocuments()

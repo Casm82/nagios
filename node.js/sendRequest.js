@@ -12,8 +12,6 @@ function sendRequest(url, authparam, reqId, forceReq) {
 			// с помощью htmltidy
 			tidy(nagiosOutput.toString(), function(err, body)
 				{ 
-					console.log("\n htmlparse #exec %j", reqId);
-
 					var report = htmlparse(body, url, reqId.quarter, reqId.year); 
 						report.forceReq = forceReq;
 					var Reports = mongoose.model("Report");

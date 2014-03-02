@@ -3,9 +3,9 @@ block css
   link(rel='stylesheet', href='/styles/publishReport.css')
 
 block content
-  h2= title
+ div.table
   table
-    - Documents.forEach(function(doc){
+    - documents.forEach(function(doc){
       th
         a(href =doc.url) 
           | Доступность за 
@@ -17,7 +17,7 @@ block content
     - })
     
     tr
-      - Documents.forEach(function(doc){
+      - documents.forEach(function(doc){
         - var report = doc.report;
         td
           include cell

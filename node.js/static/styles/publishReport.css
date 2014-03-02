@@ -5,10 +5,19 @@ body {
     font-size: 1em;
 }
 
+div.table
+{
+	padding: 3em 0 0 0;
+}
+
 table
 {
-    padding: 0 0;
-    border-collapse: separete;
+    border-collapse: separate;
+}
+
+table.report
+{
+	margin: auto;
 }
 
 table.inBox
@@ -41,4 +50,9 @@ td.servicename
 td.timeIdle
 {
     text-align: right;
+}
+
+input.timeHrs, input.timeMin
+{
+	width: 2em;
 }
