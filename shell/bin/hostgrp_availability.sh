@@ -28,7 +28,7 @@ rm $TMP_REPORT
 
 # Read each hostgroup name from file
 for hostgrp in `cat $BASE_DIR/src_hostgroups`; do
- wget --user nagiosadmin --password yfubjc -O $TMP_REPORT -q \
+ wget --user nagiosadmin --password password -O $TMP_REPORT -q \
  "http://nagios.domain.ru/nagios/cgi-bin/avail.cgi?show_log_entries=&hostgroup=$hostgrp&timeperiod=custom&smon=$SMON&sday=$SDAY&syear=$SYEAR&shour=$SHOUR&smin=$SMIN&ssec=$SSEC&emon=$EMON&eday=$EDAY&eyear=$EYEAR&ehour=$EHOUR&emin=$EMIN&esec=$ESEC&rpttimeperiod=$TIMEPERIOD" 
 
 DURATION=`grep "Duration"	$TMP_REPORT | awk -F '>' '{ print $2 }' | cut -d '<' -f 1`
