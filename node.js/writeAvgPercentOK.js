@@ -31,11 +31,25 @@ function writeAvgPercentOK(array, res, reqId){
 		};	// <--- for ( var i in array)
 
 	// Для месяца с минимальными показателями сохраняем в БД метку
-	Reports.update({date: minTimeReport._id}, {$set: {leastQuarterly: true}}, 
-		function (err) {
-			if (err) return err;
-			publishReport(res, reqId);
-	});
+	// Предварительно, очищаем старые метки
+	Reports.count( {"leastQuarterly": true}, function(err, nums) {
+		if (err) return err;
+		if (nums) {
+		console.log(nums);
+			Reports.update({"leastQuarterly": true}, {$set: {"leastQuarterly": false}}, 
+				function (err) {
+					if (err) return err;
+					Reports.update({date: minTimeReport._id}, {$set: {"leastQuarterly": true}}, 
+						function (err) {
+							if (err) return err;
+							publishReport(res, reqId);
+					});
+			});
+			}
+		}
+	);
+
+
 };		// <--- writeAvgPercentOK()
 
 module.exports = writeAvgPercentOK;

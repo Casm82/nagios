@@ -58,9 +58,9 @@ block content
                      -var servicename = "service;" + server.host + ";" + service.servicename
                      -var timeHrs = service.timeIdle[0]
                      -var timeMin = service.timeIdle[1]
-                     input.timeHrs(form="action" type="number" name=servicename value=timeHrs onchange="calcAvg()")
+                     input.timeHrs(form="action" type="number" name=servicename value=timeHrs min=0 pattern="^\d+$" onchange="calcAvg()")
                      span ч 
-                     input.timeMin(form="action" type="number" name=servicename value=timeMin onchange="calcAvg()")
+                     input.timeMin(form="action" type="number" name=servicename value=timeMin min=0 max=59 pattern="^\d{2}$" onchange="calcAvg()")
                      span м
               - })
       - })

@@ -5,17 +5,17 @@ var getReport = require('../getReport'),
 module.exports = function(app) {
 
 	app.get('/', function(req, res) {
-	var dateNow = new Date();
-	var yearNow = dateNow.getFullYear();
-	var monthNow = dateNow.getMonth() + 1;	// Текущий месяц, начало отсчёта с нуля
-	var quarterNow = Math.ceil(monthNow/3);	// Текущий квартал года
+	console.log("Connected client: %s", req.ip);
+		var dateNow = new Date();
+		var yearNow = dateNow.getFullYear();
+		var monthNow = dateNow.getMonth() + 1;	// Текущий месяц, начало отсчёта с нуля
+		var quarterNow = Math.ceil(monthNow/3);	// Текущий квартал года
 
-	var yearsArray = [];
-	for (var i = yearNow; i >= 2012; i--) { yearsArray.push(i) };
+		var yearsArray = []; 
+		for (var i = yearNow; i >= 2012; i--) { yearsArray.push(i) };
 
-	console.log(dateNow);
 		res.render('index',
-		  {	title: "Анализ отчётов Nagios",
+		  {	title: "Анализ отчётов Nagios", 
 			quarter: quarterNow, years: yearsArray
 		  });
 	});
@@ -26,12 +26,12 @@ module.exports = function(app) {
 	var monthNow = dateNow.getMonth() + 1;	// Текущий месяц, начало отсчёта с нуля
 	var quarterNow = Math.ceil(monthNow/3);	// Текущий квартал года
 
-	var yearsArray = [];
+	var yearsArray = []; 
 	for (var i = yearNow; i >= 2012; i--) { yearsArray.push(i) };
 
 		if (( req.body.year < yearNow ) || ( req.body.quarter <= quarterNow ))
 		{
-			getReport(res, monthNow, yearNow, Number(req.body.quarter), Number(req.body.year));
+			getReport(res, monthNow, yearNow, Number(req.body.quarter), Number(req.body.year)); 
 		} else {
 			res.render('msg', {msg: "Статистика по будущему отсутствует"});
 		}

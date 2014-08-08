@@ -1,7 +1,5 @@
 // Печатаем отчёт с минимальной доступностью
-var mongoose = require('mongoose'),
-//	pubReports = mongoose.model("pubReports"),
-	app = require('express');
+var app = require('express');
 
 function printReport(res, reqBody) {
 	if (reqBody) {

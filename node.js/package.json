@@ -21,10 +21,11 @@
   "homepage": "https://github.com/Casm82/nagios",
   "dependencies": {
     "mongoose": "3.x",
-    "express": "3.x",
+    "express": "4.x",
+    "express-middlewares": "0.x",
     "jade": "1.x",
-	"xpath": "",
-	"xmldom": "",
-	"htmltidy": ""
+    "xpath": "",
+    "xmldom": "",
+    "htmltidy": ""
   }
 }

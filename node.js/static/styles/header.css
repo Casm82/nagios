@@ -27,6 +27,7 @@ form.actions
 p.footer
 {
 	position: absolute;
+	padding: 0.5em;
 	right: 1em;
 }
 

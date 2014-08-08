@@ -1,4 +1,6 @@
 var express = require('express'),
+	expressMiddlewares = require('express-middlewares'),
+	methodOverride = require('method-override'),
 	mongoose = require('mongoose'),
 	models = require('./models'),
 	http = require('http'),
@@ -11,19 +13,11 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.set('x-powered-by', false);
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(app.router);
+app.use(expressMiddlewares.favicon());
+app.use(expressMiddlewares.bodyParser());
+app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'static')));
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
 
 // Подключаемся к MongoDB
 mongoose.connect("mongodb://localhost/nagios", function (err) {
@@ -35,5 +29,3 @@ mongoose.connect("mongodb://localhost/nagios", function (err) {
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on http://localhost:' + app.get('port'));
 });
-
-//app.listen(app.get('port'));

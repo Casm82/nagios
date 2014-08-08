@@ -6,6 +6,7 @@ var request = require('request'),
 // Функция выполняет запрос на страницу
 function sendRequest(url, authparam, reqId, forceReq) {
 	request.get(url, authparam, function(err, res, nagiosOutput) {
+	console.log(url);
 		if (err) throw err;
 		if (!err && res.statusCode == 200) {
 			// Приводим HTML страницу вывода nagios к стандартам W3C
